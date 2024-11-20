@@ -53,3 +53,4 @@ networks:
   issue-service:
   traefik:
     external: true
+    name: core-services_default
