@@ -1,0 +1,55 @@
+linters:
+  # please, do not use `enable-all`: it's deprecated and will be removed soon.
+  # inverted configuration with `enable-all` and `disable` is not scalable during updates of golangci-lint
+  disable-all: true
+  enable:
+    - bodyclose
+    - exhaustive
+    - goconst
+    - gofmt
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - nakedret
+    - noctx
+    - rowserrcheck
+    - staticcheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - whitespace
+    - asciicheck
+    - godot
+    - gocritic
+    - errcheck
+    - thelper
+    - tparallel
+    - wastedassign
+    - predeclared
+    - nilerr
+    - makezero
+    - forbidigo
+    - errname
+    - nilnil
+    - tenv
+
+linters-settings:
+  golint:
+    min-confidence: 0
+  depguard:
+    list-type: denylist
+    packages:
+      - github.com/pkg/errors
+
+  exclude-rules:
+    - path: cmd\/*
+      linters:
+        - forbidigo
+
+run:
+  exclude-dirs:
+    - version

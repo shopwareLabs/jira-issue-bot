@@ -1,0 +1,20 @@
+/.idea
+/terraform/.terraform
+
+
+/.direnv
+/.env
+/.env.deploy
+/result
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# Ui
+/ui/node_modules
+
+# Download folders
+/jira
+/github
+/stack-overflow

@@ -1,0 +1,44 @@
+services:
+  issue-service:
+    restart: unless-stopped
+    depends_on:
+      opensearch:
+        condition: service_healthy
+    build:
+      context: .
+    develop:
+      watch:
+        - path: .
+          action: rebuild
+    environment:
+      OPEN_SEARCH_URL: http://opensearch:9200
+      DEBUG: '${DEBUG}'
+      JIRA_EMAIL: ${JIRA_EMAIL}
+      JIRA_TOKEN: ${JIRA_TOKEN}
+      MODEL_NAME: ${MODEL_NAME}
+      INDEX_NAME: ${INDEX_NAME}
+      GITHUB_APP_ID: ${GITHUB_APP_ID}
+      GITHUB_INSTALLATION_ID: ${GITHUB_INSTALLATION_ID}
+      GITHUB_PRIVATE_KEY: ${GITHUB_PRIVATE_KEY}
+      SLACK_SIGNING_SECRET: ${SLACK_SIGNING_SECRET}
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN} 
+  opensearch:
+    image: opensearchproject/opensearch:2.16.0
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: 'c3o_ZPHo!'
+      node.roles: 'master, data, ingest, ml'
+      plugins.security.disabled: 'true'
+      plugins.ml_commons.allow_registering_model_via_url: 'true'
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  opensearch-data:
+    driver: local
