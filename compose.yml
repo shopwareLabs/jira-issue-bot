@@ -6,10 +6,6 @@ services:
         condition: service_healthy
     build:
       context: .
-    develop:
-      watch:
-        - path: .
-          action: rebuild
     environment:
       OPEN_SEARCH_URL: http://opensearch:9200
       DEBUG: '${DEBUG}'
